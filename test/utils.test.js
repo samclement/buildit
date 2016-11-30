@@ -1,37 +1,35 @@
-const assert = require('assert')
-const URL = require('url')
+const test = require('tape')
+const Url = require('url')
 const utils = require('../lib/utils')
 
-describe('utils', function() {
-  describe('#isInternalLink', function() {
-    it(`should return true when link has no prepending protocol: '/'`, function() {
-      assert.equal(utils.isInternalLink('/', 'www.google.com'), true)
-    })
-    it(`should return true when link is relative: '../'`, function() {
-      assert.equal(utils.isInternalLink('../', 'www.google.com'), true)
-    })
-    it(`should return true when link is current directory: 'abc'`, function() {
-      assert.equal(utils.isInternalLink('abc', 'www.google.com'), true)
-    })
-    it(`should return false when link and hostname do not match: 'http://www.test.com', 'www.google.com'`, function() {
-      assert.equal(utils.isInternalLink('http://www.test.com', 'www.google.com'), false)
-    })
-    it(`should return true when link and hostname match: 'http://www.google.com', 'www.google.com'`, function() {
-      assert.equal(utils.isInternalLink('http://www.google.com', 'www.google.com'), true)
-    })
-  })
-  describe('#isHashLink', function() {
-    it(`should return true if the link starts with a '#'`, function() {
-      assert.equal(utils.isHashLink('#'), true)
-    })
-    it(`should return false if the link starts with a 'http://'`, function() {
-      assert.equal(utils.isHashLink('http://www.google.com'), false)
-    })
-  })
-  describe('#normalizeLink', function() {
-    it(`should return 'http://www.topshop.com/test' when provided with parsedUlr and '/test'`, function() {
-      const parsedUrl = URL.parse('http://www.topshop.com')
-      assert.equal(utils.normalizeLink('/test', parsedUrl), 'http://www.topshop.com/test')
-    })
-  })
+test('isInternalLink', (t) => {
+  const slash = '/'
+  const relativePath = '../'
+  const resource = 'abc'
+  const testUrl = 'http://www.test.com'
+  const googleUrl = 'http://www.google.com'
+  t.plan(5)
+  t.equal(utils.isInternalLink(slash, 'www.google.com'), true, `should return true when link has no prepending protocol: '${slash}'`)
+  t.equal(utils.isInternalLink(relativePath, 'www.google.com'), true, `should return true when link is relative: '${relativePath}'`)
+  t.equal(utils.isInternalLink(resource, 'www.google.com'), true, `should return true when link is current directory: '${resource}'`)
+  t.equal(utils.isInternalLink(testUrl, googleUrl), false, `should return false when link and hostname do not match: '${testUrl}', '${googleUrl}'`)
+  t.equal(utils.isInternalLink(googleUrl, googleUrl), true, `should return true when link and hostname match: '${googleUrl}', '${googleUrl}'`)
+})
+
+test('isHashLink', (t) => {
+  const hash = '#'
+  const googleUrl = 'http://www.google.com'
+  const protocol = 'http://'
+  t.plan(2)
+  t.equal(utils.isHashLink(hash), true, `should return true if the link starts with a '${hash}'`)
+  t.equal(utils.isHashLink(googleUrl), false, `should return false if the link starts with a '${protocol}'`)
+})
+
+test('normalizeLink', (t) => {
+  const path = '/test'
+  const parsedUrl = Url.parse('http://www.topshop.com')
+  t.plan(3)
+  t.equal(utils.normalizeLink(path, parsedUrl), `http://www.topshop.com${path}`, `should return 'http://www.topshop.com${path}' when provided with parsedUlr and '${path}'`)
+  t.equal(utils.normalizeLink('/foo/bar?test=1', parsedUrl), 'http://www.topshop.com/foo/bar', `should remove query string from links`)
+  t.equal(utils.normalizeLink(`http://www.topshop.com${path}`, parsedUrl), `http://www.topshop.com${path}`, `should not change valid URI with no query string`)
 })
