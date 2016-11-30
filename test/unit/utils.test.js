@@ -1,6 +1,6 @@
 const test = require('tape')
 const Url = require('url')
-const utils = require('../lib/utils')
+const utils = require('../../lib/utils')
 
 test('isInternalLink', (t) => {
   const slash = '/'
@@ -15,6 +15,26 @@ test('isInternalLink', (t) => {
   t.equal(utils.isInternalLink(testUrl, googleUrl), false, `should return false when link and hostname do not match: '${testUrl}', '${googleUrl}'`)
   t.equal(utils.isInternalLink(googleUrl, googleUrl), true, `should return true when link and hostname match: '${googleUrl}', '${googleUrl}'`)
 })
+
+test('removeDuplicates', (t) => {
+  const intArray = [1, 2, 3, 4, 4, 5]
+  const strArray = ['a', 'b', 'b', 'c', 'd', 'd', 'e']
+  t.plan(2)
+  t.deepEqual(intArray.filter(utils.removeDuplicates), [1, 2, 3, 4, 5], `should return array of unique int values`)
+  t.deepEqual(strArray.filter(utils.removeDuplicates), ['a', 'b', 'c', 'd', 'e'], `should return an array of unique string values`)
+})
+
+test('stripTrailingSlash', (t) => {
+  const pathWithTralingSlash = '/test/'
+  const urlWithTrailingSlash = 'http://test/'
+  const urlWithNoTrailingSlash = 'http://test'
+  t.plan(3)
+  t.equal(utils.stripTrailingSlash(pathWithTralingSlash), '/test', `should remove trailing slash from path '${pathWithTralingSlash}'`)
+  t.equal(utils.stripTrailingSlash(urlWithTrailingSlash), 'http://test', `should remove traling slash from url '${urlWithTrailingSlash}'`)
+  t.equal(utils.stripTrailingSlash(urlWithNoTrailingSlash), 'http://test', `should leave url unchanged '${urlWithNoTrailingSlash}'`)
+})
+
+test('remove')
 
 test('isHashLink', (t) => {
   const hash = '#'

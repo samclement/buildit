@@ -4,7 +4,8 @@
   "description": "technical test",
   "main": "index.js",
   "scripts": {
-    "test": "tape ./test/**"
+    "test": "tape ./test/unit/**",
+    "test:integration": "tape ./test/integration/**"
   },
   "author": "sam clement",
   "license": "ISC",
@@ -12,7 +13,9 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
+    "async": "^2.1.4",
     "cheerio": "^0.22.0",
+    "debug": "^2.3.3",
     "request": "^2.79.0",
     "valid-url": "^1.0.9"
   }
