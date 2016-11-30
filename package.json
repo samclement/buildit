@@ -9,7 +9,6 @@
   "author": "sam clement",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "^3.2.0",
     "tape": "^4.6.3"
   },
   "dependencies": {
