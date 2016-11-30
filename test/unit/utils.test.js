@@ -48,8 +48,14 @@ test('isHashLink', (t) => {
 test('normalizeLink', (t) => {
   const path = '/test'
   const parsedUrl = Url.parse('http://www.topshop.com')
-  t.plan(3)
+  const deepLinkDocParsedUrl = Url.parse('http://www.topshop.com/foo/bar')
+  const deepLinkDirParsedUrl = Url.parse('http://www.topshop.com/foo/bar/')
+  const deepLinkDocParsedUrl1 = Url.parse('https://www.polymer-project.org/1.0/start/first-element/intro')
+  t.plan(6)
   t.equal(utils.normalizeLink(path, parsedUrl), `http://www.topshop.com${path}`, `should return 'http://www.topshop.com${path}' when provided with parsedUlr and '${path}'`)
   t.equal(utils.normalizeLink('/foo/bar?test=1', parsedUrl), 'http://www.topshop.com/foo/bar', `should remove query string from links`)
   t.equal(utils.normalizeLink(`http://www.topshop.com${path}`, parsedUrl), `http://www.topshop.com${path}`, `should not change valid URI with no query string`)
+  t.equal(utils.normalizeLink(`bar.html`, deepLinkDocParsedUrl), `http://www.topshop.com/foo/bar.html`, `should not change valid URI with no query string`)
+  t.equal(utils.normalizeLink(`bar.html`, deepLinkDirParsedUrl), `http://www.topshop.com/foo/bar/bar.html`, `should not change valid URI with no query string`)
+  t.equal(utils.normalizeLink(`bar.html`, deepLinkDocParsedUrl1), `https://www.polymer-project.org/1.0/start/first-element/bar.html`, `should not change valid URI with no query string`)
 })
