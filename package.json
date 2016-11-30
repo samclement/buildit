@@ -4,6 +4,7 @@
   "description": "technical test",
   "main": "index.js",
   "scripts": {
+    "start": "DEBUG=crawler node index.js",
     "test": "tape ./test/unit/**",
     "test:integration": "tape ./test/integration/**"
   },
