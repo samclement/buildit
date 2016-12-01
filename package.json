@@ -4,7 +4,7 @@
   "description": "technical test",
   "main": "index.js",
   "scripts": {
-    "start": "DEBUG=crawler node index.js",
+    "start": "node index.js",
     "test": "tape ./test/unit/**",
     "test:integration": "tape ./test/integration/**"
   },
@@ -16,7 +16,6 @@
   "dependencies": {
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
-    "debug": "^2.3.3",
     "request": "^2.79.0",
     "valid-url": "^1.0.9"
   }
