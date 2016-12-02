@@ -19,3 +19,5 @@ Run
 ---
 
 - Run application: `npm start`
+
+A sitemap.xml will be generated in the project root directory.

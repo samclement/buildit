@@ -10,6 +10,7 @@ crawler('https://buildit.digital', (err, results) => {
     stream.write(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`)
     results.forEach((url) => { stream.write(`\n  <url><loc>${url}</loc></url>`) })
     stream.write(`\n</urlset>`)
+    console.log('sitemap.xml created in project root directory')
     stream.end()
   }
 })
