@@ -1,11 +1,11 @@
 const Url = require('url')
 const crawler = require('./lib/crawler')
+const fs = require('fs')
 
 crawler('https://buildit.digital', (err, results) => {
-  const graph = results.reduce((pre, cur) => {
-    const path = Url.parse(cur).pathname
-      .split('/')
-      .filter((item) => { return item == '' ? false : true })
-    console.log(path)
-  }, {})
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(results)
+  }
 })
