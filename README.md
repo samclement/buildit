@@ -1,6 +1,8 @@
 buildit tech test
 =================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/samclement/buildit.svg)](https://greenkeeper.io/)
+
 Pre-requisites
 --------------
 
